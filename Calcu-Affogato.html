@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Affogato Bella Li</title>
+    <style>
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color:rgb(216, 204, 180);
+            background-image: url(https://i.postimg.cc/prfZrpRC/Logo.jpg);
+            background-position: center;
+            color: #4b2e2e; /* Color de texto marrón oscuro */
+        }
+        .calculator {
+            background-image: url(https://i.postimg.cc/prfZrpRC/Logo.jpg);
+            background-repeat:no;
+            background-position: center;
+            border: 2px solid #8b5e34; /* Color marrón oscuro */
+            padding: 25px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo cremoso translúcido */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        #display {
+            width: 100%;
+            height: 60px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 22px;
+            color: #3b2c2c; /* Texto marrón */
+            text-align: right;
+            margin-bottom: 15px;
+            border: 2px solid #8b5e34;
+            border-radius: 10px;
+            background-color: rgba(255, 248, 239, 0.95); /* Fondo beige suave */
+            padding-right: 10px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            width: 60px;
+            height: 60px;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 22px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #a37850; /* Marrón claro */
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .button:hover {
+            background-color: #c69b70; /* Marrón más claro en hover */
+            transform: scale(1.1);
+        }
+        .button:active {
+            background-color: #8b5e34; /* Marrón más oscuro al presionar */
+        }
+        .buttonNumber {
+            width: 60px;
+            height: 60px;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 22px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #5e3a2d; /* Marrón oscuro para los números */
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .buttonNumber:hover {
+            background-color: #7a5143; /* Marrón más claro en hover */
+            transform: scale(1.1);
+        }
+        .buttonNumber:active {
+            background-color: #3e2317; /* Marrón muy oscuro al presionar */
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="row">
+        <button class="button" onclick="Raiz()">√</button>
+        <button class="button" onclick="Potencia()">^</button>
+        <button class="button" onclick="ParImpar()">Par</button>
+        <button class="button" onclick="Primo()">P</button>
+    </div>
+
+    <div class="row">
+        <button class="button" onclick="clearDisplay()">AC</button>
+        <button class="button" onclick="appendToDisplay('(')">(</button>
+        <button class="button" onclick="appendToDisplay(')')">)</button>
+        <button class="button" onclick="appendToDisplay('/')">/</button>
+    </div>
+
+    <div class="row">
+        <button class="buttonNumber" onclick="appendToDisplay('7')">7</button>
+        <button class="buttonNumber" onclick="appendToDisplay('8')">8</button>
+        <button class="buttonNumber" onclick="appendToDisplay('9')">9</button>
+        <button class="button" onclick="appendToDisplay('*')">x</button>
+    </div>
+    <div class="row">
+        <button class="buttonNumber" onclick="appendToDisplay('4')">4</button>
+        <button class="buttonNumber" onclick="appendToDisplay('5')">5</button>
+        <button class="buttonNumber" onclick="appendToDisplay('6')">6</button>
+        <button class="button" onclick="appendToDisplay('-')">-</button>
+    </div>
+    <div class="row">
+        <button class="buttonNumber" onclick="appendToDisplay('1')">1</button>
+        <button class="buttonNumber" onclick="appendToDisplay('2')">2</button>
+        <button class="buttonNumber" onclick="appendToDisplay('3')">3</button>
+        <button class="button" onclick="appendToDisplay('+')">+</button>
+    </div>
+    <div class="row">
+        <button class="buttonNumber" onclick="appendToDisplay('0')">0</button>
+        <button class="button" onclick="appendToDisplay('.')">.</button>
+        <button class="button" onclick="deleteLast()">←</button>
+        <button class="button" onclick="calculateResult()">=</button>
+    </div>
+</div>
+</body>
+<script>
+    function appendToDisplay(value) {
+        document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById('display').value = '';
+    }
+
+    function deleteLast() {
+        var display = document.getElementById('display').value;
+        document.getElementById('display').value = display.slice(0, -1);
+    }
+
+    function calculateResult() {
+        var display = document.getElementById('display').value;
+        try {
+            document.getElementById('display').value = eval(display);
+        } catch (error) {
+            document.getElementById('display').value = 'Error';
+        }
+    }
+
+    function Raiz() {
+        var display = document.getElementById('display').value;
+        if (display) {
+            document.getElementById('display').value = Math.sqrt(eval(display));
+        }
+    }
+
+    function Potencia() {
+        var display = document.getElementById('display').value;
+        if (display) {
+            document.getElementById('display').value += '**';
+        }
+    }
+    
+    function ParImpar() {
+    var num = parseInt(document.getElementById('display').value);
+        if (isNaN(num)) {
+            document.getElementById('display').value = 'Error';
+            return;
+        }
+        document.getElementById('display').value = (num % 2 === 0) ? 'Par' : 'Impar';
+    }
+
+    function Primo() {
+        var display = document.getElementById('display').value;
+        var result = eval(display);
+        if (isPrime(result)) {
+            document.getElementById('display').value = (result + " es primo.");
+        } else {
+            document.getElementById('display').value = (result + " no es primo.");
+        }
+    }
+
+    function isPrime(num) {
+        if (num <= 1) return false;
+        if (num === 2) return true;
+        for (var i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) return false;
+        }
+        return true;
+    }
+</script>
+
+</html>
